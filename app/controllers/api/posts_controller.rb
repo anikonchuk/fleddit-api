@@ -18,6 +18,22 @@ class Api::PostsController < ApplicationController
     end
   end
 
+  def update
+    if @post.update(post_params)
+      render json: @post
+    else
+      render json: { message: @post.errors }, status: 400
+    end
+  end
+
+  def destroy
+    if @post.destroy
+      render json: Post.all, status: 204
+    else
+      render json: { message: "Unable to delete this post" }, status: 400
+    end
+  end
+
   private
 
     def set_post
