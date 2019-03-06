@@ -1,5 +1,5 @@
 class Api::PostsController < ApplicationController
-  before_action :set_post, only: [:show]
+  before_action :set_post, only: [:show, :update]
 
   def index
     render json: Post.all
@@ -18,6 +18,14 @@ class Api::PostsController < ApplicationController
     end
   end
 
+  def update
+    if @post.update(post_params)
+      render json: post
+    else
+      render json: { message: post.errors }, status: 400
+    end
+  end 
+
   private
 
     def set_post
@@ -25,6 +33,6 @@ class Api::PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title, :content, :author, :img_url)
+      params.require(:post).permit(:title, :content, :author, :img_url, :likes)
     end
 end
