@@ -1,5 +1,6 @@
 class Api::PostsController < ApplicationController
   before_action :set_post, only: [:show, :update]
+  before_action :authorize_request
 
   def index
     render json: Post.all
